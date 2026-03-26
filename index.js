@@ -16,34 +16,7 @@ app.get("/", (req, res) => {
   res.send("API ONLINE");
 });
 app.post("/accounts", async (req, res) => {
-  try {
-    const { refresh_token } = req.body;
-
-    if (!refresh_token) {
-      return res.status(400).json({ error: "refresh_token obrigatório" });
-    }
-
-    const customer = client.Customer({
-      customer_id: process.env.CUSTOMER_ID,
-      refresh_token,
-    });
-
-    const result = await customer.query(`
-      SELECT
-        customer_client.id,
-        customer_client.descriptive_name
-      FROM customer_client
-      WHERE customer_client.level <= 1
-    `);
-
-    res.json(result);
-  } catch (error) {
-    console.error("ERRO COMPLETO:", error);
-    res.status(500).json({
-      error: error.message,
-      details: error
-    });
-  }
+  return res.json({ ok: true });
 });
 
 // 🔥 ESSA PARTE É O SEGREDO
