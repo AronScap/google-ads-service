@@ -13,10 +13,13 @@ const client = new GoogleAdsApi({
   developer_token: process.env.DEVELOPER_TOKEN,
 });
 
-// 🔥 LISTAR CONTAS
 app.post("/accounts", async (req, res) => {
   try {
     const { refresh_token } = req.body;
+
+    if (!refresh_token) {
+      return res.status(400).json({ error: "refresh_token obrigatório" });
+    }
 
     const customer = client.Customer({
       customer_id: process.env.CUSTOMER_ID,
@@ -38,6 +41,9 @@ app.post("/accounts", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("🚀 Google Ads Service rodando na porta 3000");
+// 🔥 ESSA PARTE É O SEGREDO
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Rodando na porta ${PORT}`);
 });
