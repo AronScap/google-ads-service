@@ -12,7 +12,9 @@ const client = new GoogleAdsApi({
   client_secret: process.env.CLIENT_SECRET,
   developer_token: process.env.DEVELOPER_TOKEN,
 });
-
+app.get("/", (req, res) => {
+  res.send("API ONLINE");
+});
 app.post("/accounts", async (req, res) => {
   try {
     const { refresh_token } = req.body;
